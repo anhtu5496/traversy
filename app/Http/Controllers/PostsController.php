@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Post;
 use DB;
+use App\Http\Requests\PostRequest;
 
 class PostsController extends Controller
 {
@@ -31,7 +32,7 @@ class PostsController extends Controller
 
         // $posts = Post::orderBy('title','asc')->take(1)->get();
 
-        $posts = Post::orderBy('created_at','desc')->paginate(10);
+        $posts = Post::orderBy('created_at','desc')->paginate(4);
 
         return view('posts.index',compact('posts'));
     }
@@ -52,13 +53,13 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'body' => 'required',
-            'cover_image' => 'image|nullable|max:1999'
-        ]);
+        // $this->validate($request, [
+        //     'title' => 'required',
+        //     'body' => 'required',
+        //     'cover_image' => 'image|nullable|max:1999'
+        // ]);
 
         // Handle File Upload
         if($request->hasFile('cover_image')){
@@ -110,7 +111,7 @@ class PostsController extends Controller
         $post = Post::find($id);
 
         // Check for correct user
-        if(auth()->user()->id !==$post->user_id){
+        if(auth()->user()->id !== $post->user_id){
             return redirect('/posts')->with('error', 'Unauthorize Page');
         }
 
@@ -178,6 +179,7 @@ class PostsController extends Controller
         }
         
         $post->delete();
-        return redirect('/posts')->with('success', 'Post Removed');
+        // return redirect('/posts')->with('success', 'Post Removed');
+        return response()->json(['success', 'Post Removed']);
     }
 }

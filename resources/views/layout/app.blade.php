@@ -15,6 +15,8 @@
     <script>
         CKEDITOR.replace( 'article-ckeditor' );
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -34,5 +36,6 @@
     <script>
         CKEDITOR.replace( 'article-ckeditor' );
     </script>
+    <script src="/js/ajax.js"></script>
 </body>
 </html>
